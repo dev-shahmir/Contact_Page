@@ -1,0 +1,1325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <!-- ══ SEO ══ -->
+  <title>Shahmir Ahmad — Full Stack Developer & Creative</title>
+  <meta name="description" content="Shahmir Ahmad — Full Stack MERN Developer, Video Editor & Graphic Designer based in Pakistan. Currently working at WebAR Corp. Open for freelance & contracts."/>
+  <meta name="keywords" content="Shahmir Ahmad, Full Stack Developer, MERN Stack, Web Developer Pakistan, Video Editor, Graphic Designer, WebAR Corp, React Developer, Node.js"/>
+  <meta name="author" content="Shahmir Ahmad"/>
+  <meta name="robots" content="index, follow"/>
+  <meta name="theme-color" content="#39ff6e"/>
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website"/>
+  <meta property="og:title" content="Shahmir Ahmad — Full Stack Developer & Creative"/>
+  <meta property="og:description" content="MERN Stack Developer · Video Editor · Graphic Designer · Open for work"/>
+  <!-- 👇 APNI OG IMAGE KA URL YAHAN DAAL (1200x630px recommended) -->
+  <meta property="og:image" content="https://via.placeholder.com/1200x630/0a0f0a/39ff6e?text=Shahmir+Ahmad"/>
+  <!-- 👇 APNI WEBSITE KA URL YAHAN DAAL -->
+  <meta property="og:url" content="https://shahmir.dev"/>
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:title" content="Shahmir Ahmad — Full Stack Developer"/>
+  <meta name="twitter:description" content="MERN Dev · Video Editor · Graphic Designer · Open for freelance"/>
+
+  <!-- ══ Favicon: SVG "S" in parrot green ══ -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230a0f0a'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='central' text-anchor='middle' font-family='Georgia,serif' font-weight='700' font-size='20' fill='%2339ff6e'%3ES%3C/text%3E%3C/svg%3E"/>
+
+  <!-- ══ Fonts ══ -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Clash+Display:wght@400;500;600;700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
+
+  <style>
+    /* ══════════════════════════════════════
+       TOKENS
+    ══════════════════════════════════════ */
+    :root {
+      --bg:          #080d08;
+      --bg2:         #0b110b;
+      --surface:     #0f160f;
+      --surface2:    #131c13;
+      --border:      #1a2a1a;
+      --border2:     #243424;
+      --green:       #39ff6e;
+      --green2:      #2de05e;
+      --green-dim:   rgba(57,255,110,.10);
+      --green-glow:  rgba(57,255,110,.35);
+      --green-soft:  rgba(57,255,110,.06);
+      --text:        #dff2df;
+      --text-muted:  #6e9e6e;
+      --text-dim:    #3d5c3d;
+      --font-h:      'Clash Display', sans-serif;
+      --font-b:      'DM Sans', sans-serif;
+      --font-mono:   'Geist Mono', monospace;
+      --ease-spring: cubic-bezier(.34,1.56,.64,1);
+      --ease-out:    cubic-bezier(.22,1,.36,1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html {
+      scroll-behavior: smooth;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-b);
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    /* ── Custom cursor ── */
+    body { cursor: none; }
+
+    #cursor {
+      position: fixed;
+      width: 10px; height: 10px;
+      background: var(--green);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transition: transform .15s var(--ease-spring), opacity .2s;
+      box-shadow: 0 0 12px var(--green);
+      transform: translate(-50%,-50%);
+    }
+
+    #cursor-ring {
+      position: fixed;
+      width: 36px; height: 36px;
+      border: 1.5px solid rgba(57,255,110,.5);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9998;
+      transition: width .3s var(--ease-out), height .3s var(--ease-out),
+                  border-color .2s, transform .08s linear;
+      transform: translate(-50%,-50%);
+    }
+
+    body:has(a:hover) #cursor-ring {
+      width: 52px; height: 52px;
+      border-color: var(--green);
+    }
+
+    /* ══════════════════════════════════════
+       LOADER
+    ══════════════════════════════════════ */
+    #loader {
+      position: fixed;
+      inset: 0;
+      background: var(--bg);
+      z-index: 10000;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 32px;
+      transition: opacity .6s var(--ease-out), visibility .6s;
+    }
+
+    #loader.done {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .loader-logo {
+      font-family: var(--font-h);
+      font-size: 42px;
+      font-weight: 700;
+      color: var(--green);
+      letter-spacing: -.02em;
+      text-shadow: 0 0 40px var(--green-glow);
+      animation: logo-pulse 1.5s ease-in-out infinite alternate;
+    }
+
+    @keyframes logo-pulse {
+      from { text-shadow: 0 0 20px var(--green-glow); }
+      to   { text-shadow: 0 0 60px var(--green), 0 0 120px rgba(57,255,110,.2); }
+    }
+
+    .loader-track {
+      width: min(320px, 80vw);
+      height: 2px;
+      background: var(--border);
+      border-radius: 999px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .loader-fill {
+      height: 100%;
+      width: 0%;
+      background: var(--green);
+      border-radius: 999px;
+      box-shadow: 0 0 10px var(--green);
+      transition: width .08s linear;
+    }
+
+    .loader-pct {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      color: var(--green);
+      letter-spacing: .1em;
+    }
+
+    .loader-label {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-dim);
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      margin-top: -20px;
+    }
+
+    /* scan-line effect on loader */
+    #loader::after {
+      content: '';
+      position: absolute;
+      left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--green), transparent);
+      opacity: .4;
+      animation: scan 2s linear infinite;
+    }
+
+    @keyframes scan {
+      from { top: 0; }
+      to   { top: 100%; }
+    }
+
+    /* ══════════════════════════════════════
+       GRID + ORB BACKGROUND
+    ══════════════════════════════════════ */
+    .bg-grid {
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 52px 52px;
+      opacity: .35;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .bg-orb {
+      position: fixed;
+      top: -200px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 800px; height: 400px;
+      background: radial-gradient(ellipse, rgba(57,255,110,.09) 0%, transparent 65%);
+      z-index: 0;
+      pointer-events: none;
+      animation: orb-breathe 5s ease-in-out infinite alternate;
+    }
+
+    @keyframes orb-breathe {
+      from { transform: translateX(-50%) scaleX(1)   scaleY(1);   opacity: .6; }
+      to   { transform: translateX(-50%) scaleX(1.2) scaleY(1.15); opacity: 1; }
+    }
+
+    /* floating particles */
+    .particles {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .particle {
+      position: absolute;
+      width: 2px; height: 2px;
+      background: var(--green);
+      border-radius: 50%;
+      opacity: 0;
+      animation: float-up var(--dur, 8s) var(--delay, 0s) linear infinite;
+    }
+
+    @keyframes float-up {
+      0%   { transform: translateY(100vh) translateX(0);  opacity: 0; }
+      10%  { opacity: .6; }
+      90%  { opacity: .3; }
+      100% { transform: translateY(-10vh) translateX(var(--dx,20px)); opacity: 0; }
+    }
+
+    /* ══════════════════════════════════════
+       WRAPPER — 2-COLUMN GRID
+    ══════════════════════════════════════ */
+    .wrapper {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 32px 40px 24px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr auto;
+      grid-template-areas:
+        "left right"
+        "footer footer";
+      gap: 0 40px;
+      height: 100vh;
+    }
+
+    .left-panel {
+      grid-area: left;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding-right: 20px;
+      border-right: 1px solid var(--border);
+    }
+
+    .right-panel {
+      grid-area: right;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding-left: 20px;
+    }
+
+    .wrapper > footer {
+      grid-area: footer;
+    }
+
+    /* ══════════════════════════════════════
+       STATUS BADGE
+    ══════════════════════════════════════ */
+    .status-badge {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 8px 20px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--green);
+      letter-spacing: .08em;
+      margin-bottom: 20px;
+      opacity: 0;
+      animation: rise .7s var(--ease-spring) .1s forwards;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* shimmer sweep */
+    .status-badge::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, transparent 0%, rgba(57,255,110,.12) 50%, transparent 100%);
+      transform: translateX(-100%);
+      animation: shimmer 3s ease-in-out 2s infinite;
+    }
+
+    @keyframes shimmer {
+      from { transform: translateX(-100%); }
+      to   { transform: translateX(200%); }
+    }
+
+    .status-dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 8px var(--green), 0 0 16px rgba(57,255,110,.4);
+      animation: blink 1.8s ease-in-out infinite;
+      flex-shrink: 0;
+    }
+
+    @keyframes blink {
+      0%,100% { opacity: 1; box-shadow: 0 0 8px var(--green), 0 0 16px rgba(57,255,110,.4); }
+      50%      { opacity: .3; box-shadow: none; }
+    }
+
+    /* ══════════════════════════════════════
+       AVATAR
+    ══════════════════════════════════════ */
+    .avatar-wrap {
+      position: relative;
+      margin-bottom: 20px;
+      opacity: 0;
+      animation: rise .7s var(--ease-spring) .18s forwards;
+    }
+
+    .avatar-ring {
+      width: 100px; height: 100px;
+      border-radius: 50%;
+      border: 2px solid var(--green);
+      box-shadow:
+        0 0 0 8px rgba(57,255,110,.06),
+        0 0 40px rgba(57,255,110,.25),
+        inset 0 0 20px rgba(57,255,110,.05);
+      display: flex; align-items: center; justify-content: center;
+      background: var(--surface2);
+      position: relative;
+      overflow: hidden;
+      transition: box-shadow .4s var(--ease-out), transform .4s var(--ease-spring);
+    }
+
+    .avatar-ring:hover {
+      transform: scale(1.06) rotate(3deg);
+      box-shadow:
+        0 0 0 10px rgba(57,255,110,.1),
+        0 0 60px rgba(57,255,110,.45);
+    }
+
+    /* inner glow sweep on hover */
+    .avatar-ring::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: conic-gradient(from 0deg, transparent 80%, rgba(57,255,110,.3) 100%);
+      border-radius: 50%;
+      opacity: 0;
+      transition: opacity .3s;
+    }
+    .avatar-ring:hover::before { opacity: 1; animation: spin 1.5s linear infinite; }
+
+    .avatar-ring svg {
+      width: 50px; height: 50px;
+      stroke: var(--green);
+      position: relative;
+      z-index: 1;
+    }
+
+    /* orbit rings */
+    .orbit { position: absolute; border-radius: 50%; pointer-events: none; }
+    .orbit-1 {
+      inset: -10px;
+      border: 1px dashed rgba(57,255,110,.25);
+      animation: spin 14s linear infinite;
+    }
+    .orbit-2 {
+      inset: -22px;
+      border: 1px dotted rgba(57,255,110,.10);
+      animation: spin 22s linear infinite reverse;
+    }
+
+    /* orbit dot */
+    .orbit-1::after {
+      content: '';
+      position: absolute;
+      top: 50%; left: -4px;
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 8px var(--green);
+      transform: translateY(-50%);
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ══════════════════════════════════════
+       NAME + TAGLINE
+    ══════════════════════════════════════ */
+    .name {
+      font-family: var(--font-h);
+      font-size: clamp(1.9rem, 3.5vw, 2.8rem);
+      font-weight: 700;
+      letter-spacing: -.025em;
+      text-align: center;
+      line-height: 1.08;
+      opacity: 0;
+      animation: rise .7s var(--ease-spring) .25s forwards;
+    }
+
+    .name .glow {
+      color: var(--green);
+      position: relative;
+      display: inline-block;
+    }
+
+    /* animated underline on name */
+    .name .glow::after {
+      content: '';
+      position: absolute;
+      bottom: -3px;
+      left: 0; right: 0;
+      height: 2px;
+      background: var(--green);
+      border-radius: 2px;
+      transform: scaleX(0);
+      transform-origin: left;
+      animation: underline-in 1s var(--ease-spring) 1.2s forwards;
+    }
+
+    @keyframes underline-in {
+      to { transform: scaleX(1); }
+    }
+
+    .tagline {
+      margin-top: 10px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--text-muted);
+      text-align: center;
+      letter-spacing: .1em;
+      opacity: 0;
+      animation: rise .7s var(--ease-spring) .3s forwards;
+    }
+
+    /* typing cursor on tagline */
+    .tagline::after {
+      content: '|';
+      color: var(--green);
+      animation: caret .9s step-end infinite;
+      margin-left: 2px;
+    }
+
+    @keyframes caret { 0%,100%{opacity:1} 50%{opacity:0} }
+
+    /* ══════════════════════════════════════
+       ROLE CHIPS
+    ══════════════════════════════════════ */
+    .roles {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+      margin-top: 16px;
+      opacity: 0;
+      animation: rise .7s var(--ease-spring) .35s forwards;
+    }
+
+    .role-chip {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 6px 14px;
+      font-family: var(--font-mono);
+      font-size: 11.5px;
+      color: var(--green);
+      position: relative;
+      overflow: hidden;
+      transition: border-color .25s, background .25s, transform .25s var(--ease-spring), box-shadow .25s;
+      cursor: default;
+    }
+
+    .role-chip::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 2px;
+      background: var(--green);
+      box-shadow: 0 0 8px var(--green);
+    }
+
+    .role-chip:hover {
+      border-color: var(--green);
+      background: var(--green-dim);
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: 0 8px 20px rgba(57,255,110,.15);
+    }
+
+    /* ══════════════════════════════════════
+       ABOUT CARD
+    ══════════════════════════════════════ */
+    .about-card {
+      margin-top: 24px;
+      width: 100%;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 22px 24px;
+      position: relative;
+      overflow: hidden;
+      opacity: 0;
+      animation: rise .7s var(--ease-spring) .4s forwards;
+      transition: border-color .3s, box-shadow .3s;
+    }
+
+    .about-card:hover {
+      border-color: var(--border2);
+      box-shadow: 0 0 40px rgba(57,255,110,.06);
+    }
+
+    /* animated top border */
+    .about-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: -100%; right: -100%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--green), transparent);
+      animation: border-travel 3s ease-in-out infinite;
+    }
+
+    @keyframes border-travel {
+      0%   { transform: translateX(-50%); }
+      100% { transform: translateX(50%); }
+    }
+
+    .about-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 80px;
+      background: linear-gradient(0deg, var(--surface) 0%, transparent 100%);
+      pointer-events: none;
+    }
+
+    .about-label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--green);
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .about-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .about-text {
+      font-size: 13.5px;
+      line-height: 1.78;
+      color: var(--text-muted);
+      font-weight: 300;
+      position: relative;
+      z-index: 1;
+    }
+
+    .about-text strong { color: var(--text); font-weight: 600; }
+    .about-text .g     { color: var(--green); font-weight: 500; }
+
+    .company-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 16px;
+      background: rgba(57,255,110,.08);
+      border: 1px solid rgba(57,255,110,.2);
+      border-radius: 10px;
+      padding: 8px 14px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--green);
+      position: relative;
+      z-index: 1;
+      transition: background .25s, border-color .25s, transform .25s var(--ease-spring);
+    }
+
+    .company-badge:hover {
+      background: rgba(57,255,110,.14);
+      border-color: var(--green);
+      transform: translateX(4px);
+    }
+
+    /* ══════════════════════════════════════
+       SECTION DIVIDER
+    ══════════════════════════════════════ */
+    .section-label {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-top: 0;
+      margin-bottom: 14px;
+      opacity: 0;
+      animation: rise .7s var(--ease-spring) .45s forwards;
+    }
+
+    .section-label span {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      white-space: nowrap;
+    }
+
+    .section-line { flex: 1; height: 1px; background: var(--border); }
+
+    /* ══════════════════════════════════════
+       LINK CARDS — ADVANCED HOVER
+    ══════════════════════════════════════ */
+    .links { width: 100%; display: flex; flex-direction: column; gap: 9px; }
+
+    .link-card {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 14px 18px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      cursor: none;
+      text-decoration: none;
+      color: var(--text);
+      position: relative;
+      overflow: hidden;
+      opacity: 0;
+      transition:
+        border-color .35s var(--ease-out),
+        transform .35s var(--ease-spring),
+        box-shadow .35s var(--ease-out);
+    }
+
+    .link-card:nth-child(1) { animation: card-in .5s var(--ease-spring) .48s forwards; }
+    .link-card:nth-child(2) { animation: card-in .5s var(--ease-spring) .54s forwards; }
+    .link-card:nth-child(3) { animation: card-in .5s var(--ease-spring) .60s forwards; }
+    .link-card:nth-child(4) { animation: card-in .5s var(--ease-spring) .66s forwards; }
+    .link-card:nth-child(5) { animation: card-in .5s var(--ease-spring) .72s forwards; }
+
+    @keyframes card-in {
+      from { opacity: 0; transform: translateY(20px) scale(.97); }
+      to   { opacity: 1; transform: translateY(0)   scale(1); }
+    }
+
+    /* magnetic spotlight — follows mouse via JS */
+    .link-card .spotlight {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at var(--mx,50%) var(--my,50%), rgba(57,255,110,.12) 0%, transparent 60%);
+      opacity: 0;
+      transition: opacity .3s;
+      pointer-events: none;
+      border-radius: inherit;
+    }
+
+    .link-card:hover .spotlight { opacity: 1; }
+
+    /* bottom glide bar */
+    .link-card::before {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--green), transparent);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform .4s var(--ease-out);
+    }
+
+    .link-card:hover {
+      border-color: rgba(57,255,110,.5);
+      transform: translateY(-3px) scale(1.012);
+      box-shadow:
+        0 12px 40px rgba(57,255,110,.12),
+        0 0 0 1px rgba(57,255,110,.1) inset;
+    }
+
+    .link-card:hover::before { transform: scaleX(1); }
+
+    /* active press feel */
+    .link-card:active {
+      transform: translateY(-1px) scale(.99);
+      transition-duration: .1s;
+    }
+
+    /* icon box */
+    .link-icon {
+      width: 44px; height: 44px;
+      border-radius: 12px;
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      transition:
+        background .3s,
+        border-color .3s,
+        transform .35s var(--ease-spring),
+        box-shadow .3s;
+    }
+
+    .link-card:hover .link-icon {
+      background: var(--green-dim);
+      border-color: rgba(57,255,110,.5);
+      transform: rotate(-8deg) scale(1.12);
+      box-shadow: 0 0 18px rgba(57,255,110,.25);
+    }
+
+    .link-icon svg {
+      width: 20px; height: 20px;
+      fill: var(--text-muted);
+      transition: fill .3s, transform .3s;
+    }
+
+    .link-card:hover .link-icon svg {
+      fill: var(--green);
+      transform: scale(1.1);
+    }
+
+    .link-info { flex: 1; }
+
+    .link-name {
+      font-family: var(--font-h);
+      font-size: 15px;
+      font-weight: 600;
+      display: block;
+      letter-spacing: -.01em;
+      transition: color .2s;
+    }
+
+    .link-card:hover .link-name { color: var(--green); }
+
+    .link-sub {
+      font-family: var(--font-b);
+      font-size: 12px;
+      color: var(--text-dim);
+      margin-top: 3px;
+      display: block;
+      font-weight: 300;
+      transition: color .2s;
+    }
+
+    .link-card:hover .link-sub { color: var(--text-muted); }
+
+    /* arrow — morphs on hover */
+    .link-arrow-wrap {
+      width: 32px; height: 32px;
+      border-radius: 9px;
+      border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      transition:
+        background .3s,
+        border-color .3s,
+        transform .35s var(--ease-spring);
+    }
+
+    .link-card:hover .link-arrow-wrap {
+      background: var(--green-dim);
+      border-color: rgba(57,255,110,.4);
+      transform: rotate(45deg) scale(1.1);
+    }
+
+    .link-arrow-wrap svg {
+      width: 15px; height: 15px;
+      stroke: var(--text-dim);
+      fill: none;
+      transition: stroke .2s, transform .3s;
+    }
+
+    .link-card:hover .link-arrow-wrap svg {
+      stroke: var(--green);
+      transform: rotate(-45deg);
+    }
+
+    /* ══════════════════════════════════════
+       OFW BANNER
+    ══════════════════════════════════════ */
+    .ofw-banner {
+      width: 100%;
+      margin-top: 14px;
+      border: 1px solid rgba(57,255,110,.2);
+      border-radius: 16px;
+      padding: 18px 20px;
+      background: linear-gradient(135deg, var(--surface2) 0%, var(--bg2) 100%);
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      opacity: 0;
+      animation: rise .7s var(--ease-spring) .78s forwards;
+      position: relative;
+      overflow: hidden;
+      transition: border-color .3s, box-shadow .3s;
+    }
+
+    .ofw-banner:hover {
+      border-color: rgba(57,255,110,.45);
+      box-shadow: 0 0 50px rgba(57,255,110,.08);
+    }
+
+    /* corner accent */
+    .ofw-banner::before {
+      content: '';
+      position: absolute;
+      top: 0; right: 0;
+      width: 80px; height: 80px;
+      background: radial-gradient(circle at top right, rgba(57,255,110,.1), transparent 70%);
+    }
+
+    .ofw-icon {
+      font-size: 28px;
+      flex-shrink: 0;
+      animation: rocket 2s ease-in-out infinite;
+    }
+
+    @keyframes rocket {
+      0%,100% { transform: translateY(0) rotate(0deg); }
+      50%      { transform: translateY(-5px) rotate(5deg); }
+    }
+
+    .ofw-text h3 {
+      font-family: var(--font-h);
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--green);
+      letter-spacing: -.01em;
+    }
+
+    .ofw-text p {
+      font-size: 11.5px;
+      color: var(--text-muted);
+      margin-top: 3px;
+      font-weight: 300;
+      line-height: 1.5;
+    }
+
+    /* ══════════════════════════════════════
+       FOOTER
+    ══════════════════════════════════════ */
+    footer {
+      margin-top: 14px;
+      width: 100%;
+      border-top: 1px solid var(--border);
+      padding-top: 12px;
+      padding-bottom: 8px;
+      text-align: center;
+      opacity: 0;
+      animation: rise .7s var(--ease-spring) .84s forwards;
+    }
+
+    .footer-name {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-dim);
+      letter-spacing: .08em;
+    }
+
+    .footer-name span { color: var(--green); }
+
+    .footer-cr {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--text-dim);
+      margin-top: 7px;
+    }
+
+    /* ══════════════════════════════════════
+       RISE KEYFRAME (shared)
+    ══════════════════════════════════════ */
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(22px) scale(.97); }
+      to   { opacity: 1; transform: translateY(0)    scale(1); }
+    }
+
+    /* ══════════════════════════════════════
+       TOAST
+    ══════════════════════════════════════ */
+    .toast {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%) translateY(16px) scale(.9);
+      background: var(--green);
+      color: #000;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 600;
+      padding: 10px 24px;
+      border-radius: 999px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .3s, transform .35s var(--ease-spring);
+      z-index: 9990;
+      white-space: nowrap;
+      letter-spacing: .06em;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0) scale(1);
+    }
+
+    /* ══════════════════════════════════════
+       SCROLL REVEAL
+    ══════════════════════════════════════ */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity .6s var(--ease-out), transform .6s var(--ease-out);
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ══════════════════════════════════════
+       RESPONSIVE
+    ══════════════════════════════════════ */
+
+    /* Large screens (1024px+) — default 2 col, no scroll */
+    @media (min-width: 1024px) {
+      html, body { overflow: hidden; height: 100%; }
+      body { height: 100vh; }
+    }
+
+    /* Medium tablet (768px – 1023px) — 2 col, allow scroll if needed */
+    @media (max-width: 1023px) and (min-width: 768px) {
+      html, body { overflow-y: auto; height: auto; }
+      .wrapper {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto auto;
+        height: auto;
+        min-height: 100vh;
+        padding: 28px 28px 20px;
+        gap: 0 24px;
+      }
+      .left-panel { padding-right: 12px; justify-content: flex-start; padding-top: 20px; }
+      .right-panel { padding-left: 12px; justify-content: flex-start; padding-top: 20px; }
+    }
+
+    /* Mobile (below 768px) — single column, natural scroll */
+    @media (max-width: 767px) {
+      html, body { overflow-y: auto; height: auto; }
+      .wrapper {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+        grid-template-areas:
+          "left"
+          "right"
+          "footer";
+        height: auto;
+        min-height: 100vh;
+        padding: 40px 18px 32px;
+        gap: 0;
+        max-width: 520px;
+      }
+      .left-panel {
+        padding-right: 0;
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+        padding-bottom: 32px;
+        margin-bottom: 28px;
+      }
+      .right-panel {
+        padding-left: 0;
+      }
+      .wrapper > footer { margin-top: 36px; }
+      .about-card { padding: 18px 16px; }
+      .link-card { padding: 13px 14px; }
+    }
+
+    /* Small mobile (below 480px) */
+    @media (max-width: 480px) {
+      .wrapper { padding: 32px 14px 28px; }
+      .name { font-size: 2rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Custom cursor -->
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+
+<!-- Background layers -->
+<div class="bg-grid"></div>
+<div class="bg-orb"></div>
+<div class="particles" id="particles"></div>
+
+<!-- ══ LOADER ══ -->
+<div id="loader">
+  <div class="loader-logo">SA</div>
+  <div style="display:flex;flex-direction:column;align-items:center;gap:12px;width:100%;">
+    <div class="loader-pct" id="loader-pct">0%</div>
+    <div class="loader-track">
+      <div class="loader-fill" id="loader-fill"></div>
+    </div>
+    <div class="loader-label" id="loader-label">Initializing</div>
+  </div>
+</div>
+
+<!-- ══ MAIN ══ -->
+<div class="wrapper">
+
+  <!-- ══ LEFT PANEL: Profile Info ══ -->
+  <div class="left-panel">
+
+    <!-- Status -->
+    <div class="status-badge">
+      <div class="status-dot"></div>
+      Available for new projects
+    </div>
+
+    <!-- Avatar -->
+    <!-- 👇 APNI PROFILE PICTURE LAGANI HO TO: avatar-ring div ke andar SVG ki jagah <img src="YOUR_PHOTO.jpg" style="width:100%;height:100%;object-fit:cover;border-radius:50%;"> daal do -->
+    <div class="avatar-wrap">
+      <div class="avatar-ring">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.2">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+          <circle cx="12" cy="7" r="4"/>
+        </svg>
+      </div>
+      <div class="orbit orbit-1"></div>
+      <div class="orbit orbit-2"></div>
+    </div>
+
+    <!-- Name -->
+    <h1 class="name">Shahmir <span class="glow">Ahmad</span></h1>
+    <p class="tagline">// building things that actually work on the internet</p>
+
+    <!-- Role chips -->
+    <div class="roles">
+      <div class="role-chip">Full Stack Dev</div>
+      <div class="role-chip">MERN Stack</div>
+      <div class="role-chip">Video Editor</div>
+      <div class="role-chip">Graphic Designer</div>
+    </div>
+
+    <!-- About -->
+    <div class="about-card reveal">
+      <div class="about-label">about.me</div>
+      <p class="about-text">
+        Hey! I'm <strong>Shahmir</strong> — a developer who actually reads error messages
+        (most of the time). I build full-stack web apps with <span class="g">MERN</span>,
+        craft visuals that stop thumbs mid-scroll, and edit videos that don't make
+        people reach for the skip button.<br><br>
+        When I'm not pushing commits, I'm probably fixing that one CSS bug that
+        "only appears in production." Currently building the web at
+      </p>
+      <!-- 👇 AGAR WEBAAR CORP KA LINK DALNA HO TO <a href="YOUR_COMPANY_URL"> MEIN WRAP KARO -->
+      <div class="company-badge">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" style="opacity:.8"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+        WebAR Corp &nbsp;·&nbsp; Web Developer
+      </div>
+    </div>
+
+  </div><!-- /left-panel -->
+
+  <!-- ══ RIGHT PANEL: Links ══ -->
+  <div class="right-panel">
+
+    <!-- Section divider -->
+    <div class="section-label reveal">
+      <div class="section-line"></div>
+      <span>// find me here</span>
+      <div class="section-line"></div>
+    </div>
+
+    <!-- Links -->
+    <div class="links">
+
+      <!-- 👇 APNA LINKEDIN URL YAHAN DAAL (e.g. https://linkedin.com/in/YOUR-USERNAME) -->
+      <a class="link-card" href="https://linkedin.com/in/shahmir-ahmad" target="_blank" rel="noopener" data-label="✓ Redirecting to LinkedIn">
+        <div class="spotlight"></div>
+        <div class="link-icon">
+          <svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+        </div>
+        <div class="link-info">
+          <span class="link-name">LinkedIn</span>
+          <span class="link-sub">Let's connect professionally</span>
+        </div>
+        <div class="link-arrow-wrap">
+          <svg viewBox="0 0 24 24" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </div>
+      </a>
+
+      <!-- 👇 APNA INSTAGRAM URL YAHAN DAAL (e.g. https://instagram.com/YOUR-USERNAME) -->
+      <a class="link-card" href="https://instagram.com/shahmir.ahmad" target="_blank" rel="noopener" data-label="✓ Redirecting to Instagram">
+        <div class="spotlight"></div>
+        <div class="link-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
+        </div>
+        <div class="link-info">
+          <span class="link-name">Instagram</span>
+          <span class="link-sub">Design work & behind the scenes</span>
+        </div>
+        <div class="link-arrow-wrap">
+          <svg viewBox="0 0 24 24" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </div>
+      </a>
+
+      <!-- 👇 APNA GITHUB URL YAHAN DAAL (e.g. https://github.com/YOUR-USERNAME) -->
+      <a class="link-card" href="https://github.com/shahmir-ahmad" target="_blank" rel="noopener" data-label="✓ Redirecting to GitHub">
+        <div class="spotlight"></div>
+        <div class="link-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+        </div>
+        <div class="link-info">
+          <span class="link-name">GitHub</span>
+          <span class="link-sub">Code, projects & open source</span>
+        </div>
+        <div class="link-arrow-wrap">
+          <svg viewBox="0 0 24 24" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </div>
+      </a>
+
+      <!-- 👇 APNA WHATSAPP NUMBER YAHAN DAAL — format: https://wa.me/92XXXXXXXXXX (country code ke saath, no + or spaces) -->
+      <a class="link-card" href="https://wa.me/923000000000" target="_blank" rel="noopener" data-label="✓ Opening WhatsApp">
+        <div class="spotlight"></div>
+        <div class="link-icon">
+          <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
+        </div>
+        <div class="link-info">
+          <span class="link-name">WhatsApp</span>
+          <span class="link-sub">Quick chat — I don't bite (usually)</span>
+        </div>
+        <div class="link-arrow-wrap">
+          <svg viewBox="0 0 24 24" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </div>
+      </a>
+
+      <!-- 👇 APNA EMAIL ADDRESS YAHAN DAAL (e.g. mailto:your@email.com) -->
+      <a class="link-card" href="mailto:shahmir@example.com" data-label="✓ Opening your mail app">
+        <div class="spotlight"></div>
+        <div class="link-icon">
+          <svg viewBox="0 0 24 24"><path d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.273H1.636A1.636 1.636 0 0 1 0 19.366V5.457c0-2.023 2.309-3.178 3.927-1.964L5.455 4.64 12 9.548l6.545-4.91 1.528-1.145C21.69 2.28 24 3.434 24 5.457z"/></svg>
+        </div>
+        <div class="link-info">
+          <span class="link-name">Email</span>
+          <span class="link-sub">For the formal folks — I reply fast</span>
+        </div>
+        <div class="link-arrow-wrap">
+          <svg viewBox="0 0 24 24" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </div>
+      </a>
+
+    </div><!-- /links -->
+
+    <!-- Open For Work -->
+    <div class="ofw-banner reveal">
+      <div class="ofw-icon">🚀</div>
+      <div class="ofw-text">
+        <h3>Open For Work</h3>
+        <p>Freelance · Contract · Full-time<br>Got a query? Reach out — consultation is always free.</p>
+      </div>
+    </div>
+
+  </div><!-- /right-panel -->
+
+  <!-- Footer — full width -->
+  <footer>
+    <p class="footer-name">Developed by <span>Shahmir Ahmad</span></p>
+    <p class="footer-cr">© <span id="year"></span> — All Rights Reserved</p>
+  </footer>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ── Year ── */
+document.getElementById('year').textContent = new Date().getFullYear();
+
+/* ── Loader ── */
+(function() {
+  const fill  = document.getElementById('loader-fill');
+  const pct   = document.getElementById('loader-pct');
+  const label = document.getElementById('loader-label');
+  const loader = document.getElementById('loader');
+
+  const stages = [
+    { target: 20,  text: 'Loading assets...' },
+    { target: 45,  text: 'Brewing coffee...' },
+    { target: 70,  text: 'Fixing last bug...' },
+    { target: 90,  text: 'Deploying...' },
+    { target: 100, text: 'Ready.' },
+  ];
+
+  let current = 0;
+  let stage   = 0;
+  const totalMs = 2200;
+  const stepMs  = 18;
+  const steps   = totalMs / stepMs;
+
+  const interval = setInterval(() => {
+    current = Math.min(current + (100 / steps), 100);
+    fill.style.width  = current + '%';
+    pct.textContent   = Math.floor(current) + '%';
+
+    if (stage < stages.length && current >= stages[stage].target) {
+      label.textContent = stages[stage].text;
+      stage++;
+    }
+
+    if (current >= 100) {
+      clearInterval(interval);
+      setTimeout(() => {
+        loader.classList.add('done');
+        document.body.style.cursor = 'none';
+      }, 300);
+    }
+  }, stepMs);
+})();
+
+/* ── Custom cursor ── */
+const cur  = document.getElementById('cursor');
+const ring = document.getElementById('cursor-ring');
+let mx = 0, my = 0, rx = 0, ry = 0;
+
+document.addEventListener('mousemove', e => {
+  mx = e.clientX; my = e.clientY;
+  cur.style.left  = mx + 'px';
+  cur.style.top   = my + 'px';
+});
+
+(function animRing() {
+  rx += (mx - rx) * .12;
+  ry += (my - ry) * .12;
+  ring.style.left = rx + 'px';
+  ring.style.top  = ry + 'px';
+  requestAnimationFrame(animRing);
+})();
+
+/* ── Spotlight on link cards ── */
+document.querySelectorAll('.link-card').forEach(card => {
+  card.addEventListener('mousemove', e => {
+    const rect = card.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width  * 100).toFixed(1) + '%';
+    const y = ((e.clientY - rect.top)  / rect.height * 100).toFixed(1) + '%';
+    card.querySelector('.spotlight').style.setProperty('--mx', x);
+    card.querySelector('.spotlight').style.setProperty('--my', y);
+  });
+});
+
+/* ── Toast ── */
+const toast = document.getElementById('toast');
+let toastTimer;
+
+document.querySelectorAll('.link-card').forEach(card => {
+  card.addEventListener('click', () => {
+    toast.textContent = card.dataset.label || 'Redirecting...';
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toast.classList.remove('show'), 2200);
+  });
+});
+
+/* ── Scroll reveal ── */
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+}, { threshold: .12 });
+
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+/* ── Floating particles ── */
+const container = document.getElementById('particles');
+for (let i = 0; i < 22; i++) {
+  const p = document.createElement('div');
+  p.className = 'particle';
+  p.style.cssText = `
+    left: ${Math.random() * 100}%;
+    width: ${Math.random() > .7 ? 3 : 2}px;
+    height: ${Math.random() > .7 ? 3 : 2}px;
+    --dur: ${6 + Math.random() * 10}s;
+    --delay: ${Math.random() * 8}s;
+    --dx: ${(Math.random() - .5) * 60}px;
+    opacity: 0;
+    box-shadow: 0 0 ${Math.random() > .5 ? 4 : 2}px #39ff6e;
+  `;
+  container.appendChild(p);
+}
+</script>
+</body>
+</html>
